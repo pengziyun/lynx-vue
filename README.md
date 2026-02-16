@@ -3,7 +3,7 @@
 Vue 3 integration for Lynx cross-platform framework.
 
 [![CI](https://github.com/your-org/lynx-vue/actions/workflows/ci.yml/badge.svg)](https://github.com/your-org/lynx-vue/actions/workflows/ci.yml)
-[![npm version](https://badge.fury.io/js/vue-lynx.svg)](https://www.npmjs.com/package/vue-lynx)
+[![npm version](https://badge.fury.io/js/%40pgg%2Fvue-lynx.svg)](https://www.npmjs.com/package/@pgg/vue-lynx)
 
 ## 特性
 
@@ -16,14 +16,14 @@ Vue 3 integration for Lynx cross-platform framework.
 ## 安装
 
 ```bash
-pnpm add vue-lynx vue
+pnpm add @pgg/vue-lynx vue
 ```
 
 ## 快速开始
 
 ```typescript
-import { createApp } from 'vue-lynx'
-import { View, Text } from 'vue-lynx'
+import { createApp } from '@pgg/vue-lynx'
+import { View, Text } from '@pgg/vue-lynx'
 import { ref } from 'vue'
 
 const App = {

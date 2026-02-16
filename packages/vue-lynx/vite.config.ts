@@ -11,12 +11,12 @@ export default defineConfig({
     },
     rollupOptions: {
       // 将 Vue、runtime 和 components 标记为外部依赖
-      external: ['vue', '@lynx-vue/runtime', '@lynx-vue/components'],
+      external: ['vue', '@pgg/runtime', '@pgg/components'],
       output: {
         globals: {
           vue: 'Vue',
-          '@lynx-vue/runtime': 'LynxVueRuntime',
-          '@lynx-vue/components': 'LynxVueComponents',
+          '@pgg/runtime': 'LynxVueRuntime',
+          '@pgg/components': 'LynxVueComponents',
         },
       },
     },

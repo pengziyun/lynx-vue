@@ -6,9 +6,9 @@
   "scripts": {
     "dev": "pnpm -r --parallel --filter \"./packages/*\" dev",
     "build": "pnpm -r --filter \"./packages/*\" build",
-    "build:runtime": "pnpm --filter @lynx-vue/runtime build",
-    "build:components": "pnpm --filter @lynx-vue/components build",
-    "build:vue-lynx": "pnpm --filter vue-lynx build",
+    "build:runtime": "pnpm --filter @pgg/runtime build",
+    "build:components": "pnpm --filter @pgg/components build",
+    "build:vue-lynx": "pnpm --filter @pgg/vue-lynx build",
     "test": "pnpm -r test",
     "typecheck": "pnpm -r exec tsc --noEmit",
     "lint": "eslint --ext .ts,.vue packages/*/src",

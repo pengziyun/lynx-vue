@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref } from 'vue'
-import { View, Text, Image } from 'vue-lynx'
+import { View, Text, Image } from '@pgg/vue-lynx'
 
 // 计数器状态
 const count = ref(0)

@@ -1,4 +1,4 @@
-# vue-lynx
+# @pgg/vue-lynx
 
 ## 0.1.0
 

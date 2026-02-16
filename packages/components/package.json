@@ -1,5 +1,5 @@
 {
-  "name": "@lynx-vue/components",
+  "name": "@pgg/components",
   "version": "0.0.1",
   "type": "module",
   "main": "./dist/index.cjs",
@@ -18,7 +18,7 @@
     "test": "vitest"
   },
   "dependencies": {
-    "@lynx-vue/runtime": "workspace:*"
+    "@pgg/runtime": "workspace:*"
   },
   "peerDependencies": {
     "vue": "^3.4.0"
@@ -29,5 +29,8 @@
     "vite": "^5.0.0",
     "vitest": "^1.2.0",
     "vue": "^3.4.0"
+  },
+  "publishConfig": {
+    "access": "public"
   }
 }

@@ -53,7 +53,7 @@ List组件支持以下事件：
 ```vue
 <script setup lang="ts">
 import { ref } from 'vue'
-import { List, View, Text } from 'vue-lynx'
+import { List, View, Text } from '@pgg/vue-lynx'
 
 const items = ref(
   Array.from({ length: 100 }, (_, i) => ({ id: i, title: `项目 ${i + 1}` }))

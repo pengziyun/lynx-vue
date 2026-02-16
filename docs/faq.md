@@ -52,7 +52,7 @@ Vue Lynx的最小依赖：
 ```json
 {
   "vue": "^3.4.0",
-  "vue-lynx": "latest"
+  "@pgg/vue-lynx": "latest"
 }
 ```
 
@@ -115,7 +115,7 @@ triggerRef(largeData)
 
 2. **正确导入组件**
    ```typescript
-   import { View, Text } from 'vue-lynx'
+   import { View, Text } from '@pgg/vue-lynx'
    ```
 
 3. **Lynx支持的CSS属性**

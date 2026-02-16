@@ -9,7 +9,7 @@
   },
   "dependencies": {
     "vue": "^3.4.0",
-    "vue-lynx": "workspace:*"
+    "@pgg/vue-lynx": "workspace:*"
   },
   "devDependencies": {
     "@vitejs/plugin-vue": "^5.0.0",

@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref } from 'vue'
-import { View, Text, List, ScrollView } from 'vue-lynx'
+import { View, Text, List, ScrollView } from '@pgg/vue-lynx'
 
 // 生成1000条数据用于演示虚拟滚动
 const items = ref(

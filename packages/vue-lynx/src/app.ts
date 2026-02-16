@@ -1,5 +1,5 @@
 import { createApp as createVueApp } from 'vue'
-import { createRenderer } from '@lynx-vue/runtime'
+import { createRenderer } from '@pgg/runtime'
 
 /**
  * 创建Lynx应用

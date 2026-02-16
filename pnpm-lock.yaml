@@ -47,12 +47,12 @@ importers:
 
   examples/basic:
     dependencies:
+      '@pgg/vue-lynx':
+        specifier: workspace:*
+        version: link:../../packages/vue-lynx
       vue:
         specifier: ^3.4.0
         version: 3.5.28(typescript@5.9.3)
-      vue-lynx:
-        specifier: workspace:*
-        version: link:../../packages/vue-lynx
     devDependencies:
       '@vitejs/plugin-vue':
         specifier: ^5.0.0
@@ -66,12 +66,12 @@ importers:
 
   examples/form:
     dependencies:
+      '@pgg/vue-lynx':
+        specifier: workspace:*
+        version: link:../../packages/vue-lynx
       vue:
         specifier: ^3.4.0
         version: 3.5.28(typescript@5.9.3)
-      vue-lynx:
-        specifier: workspace:*
-        version: link:../../packages/vue-lynx
     devDependencies:
       '@vitejs/plugin-vue':
         specifier: ^5.0.0
@@ -85,12 +85,12 @@ importers:
 
   examples/list:
     dependencies:
+      '@pgg/vue-lynx':
+        specifier: workspace:*
+        version: link:../../packages/vue-lynx
       vue:
         specifier: ^3.4.0
         version: 3.5.28(typescript@5.9.3)
-      vue-lynx:
-        specifier: workspace:*
-        version: link:../../packages/vue-lynx
     devDependencies:
       '@vitejs/plugin-vue':
         specifier: ^5.0.0
@@ -104,12 +104,12 @@ importers:
 
   examples/thread:
     dependencies:
+      '@pgg/vue-lynx':
+        specifier: workspace:*
+        version: link:../../packages/vue-lynx
       vue:
         specifier: ^3.4.0
         version: 3.5.28(typescript@5.9.3)
-      vue-lynx:
-        specifier: workspace:*
-        version: link:../../packages/vue-lynx
     devDependencies:
       '@vitejs/plugin-vue':
         specifier: ^5.0.0
@@ -123,7 +123,7 @@ importers:
 
   packages/components:
     dependencies:
-      '@lynx-vue/runtime':
+      '@pgg/runtime':
         specifier: workspace:*
         version: link:../runtime
     devDependencies:
@@ -163,10 +163,10 @@ importers:
 
   packages/vue-lynx:
     dependencies:
-      '@lynx-vue/components':
+      '@pgg/components':
         specifier: workspace:*
         version: link:../components
-      '@lynx-vue/runtime':
+      '@pgg/runtime':
         specifier: workspace:*
         version: link:../runtime
     devDependencies:

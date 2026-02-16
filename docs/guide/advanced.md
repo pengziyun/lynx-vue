@@ -11,7 +11,7 @@
 ```vue
 <!-- MyButton.vue -->
 <script setup lang="ts">
-import { View, Text } from 'vue-lynx'
+import { View, Text } from '@pgg/vue-lynx'
 
 defineProps<{
   title: string
@@ -77,7 +77,7 @@ Vue Lynx支持Vue的插槽功能，可以实现更灵活的组件复用。
 ```vue
 <!-- Card.vue -->
 <script setup>
-import { View, Text } from 'vue-lynx'
+import { View, Text } from '@pgg/vue-lynx'
 </script>
 
 <template>
@@ -106,7 +106,7 @@ import { View, Text } from 'vue-lynx'
 ```vue
 <!-- List.vue -->
 <script setup>
-import { View, Text } from 'vue-lynx'
+import { View, Text } from '@pgg/vue-lynx'
 
 defineProps<{
   items: string[]
@@ -329,7 +329,7 @@ onErrorCaptured((err) => {
 ### 全局错误处理
 
 ```typescript
-import { createApp } from 'vue-lynx'
+import { createApp } from '@pgg/vue-lynx'
 import App from './App.vue'
 
 const app = createApp(App)
@@ -408,7 +408,7 @@ export const router = createRouter({
 
 ```typescript
 // main.ts
-import { createApp } from 'vue-lynx'
+import { createApp } from '@pgg/vue-lynx'
 import { router } from './router'
 import App from './App.vue'
 
@@ -420,7 +420,7 @@ app.mount('#app')
 ```vue
 <!-- App.vue -->
 <script setup>
-import { View } from 'vue-lynx'
+import { View } from '@pgg/vue-lynx'
 import { RouterView, RouterLink } from 'vue-router'
 </script>
 

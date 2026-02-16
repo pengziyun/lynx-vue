@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref } from 'vue'
-import { View, Text, Input, Textarea } from 'vue-lynx'
+import { View, Text, Input, Textarea } from '@pgg/vue-lynx'
 
 // 表单数据
 const username = ref('')

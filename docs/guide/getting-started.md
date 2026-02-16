@@ -15,17 +15,17 @@
 使用pnpm安装Vue Lynx：
 
 ```bash
-pnpm add vue-lynx vue
+pnpm add @pgg/vue-lynx vue
 ```
 
 你也可以使用npm或yarn：
 
 ```bash
 # npm
-npm install vue-lynx vue
+npm install @pgg/vue-lynx vue
 
 # yarn
-yarn add vue-lynx vue
+yarn add @pgg/vue-lynx vue
 ```
 
 ## 创建应用
@@ -33,14 +33,14 @@ yarn add vue-lynx vue
 安装完成后，你可以使用`createApp`方法创建Vue Lynx应用：
 
 ```typescript
-import { createApp } from 'vue-lynx'
+import { createApp } from '@pgg/vue-lynx'
 import App from './App.vue'
 
 const app = createApp(App)
 app.mount('#app')
 ```
 
-这与标准的Vue应用创建方式非常相似，唯一的区别是使用`vue-lynx`包中的`createApp`而不是`vue`包中的。
+这与标准的Vue应用创建方式非常相似，唯一的区别是使用`@pgg/vue-lynx`包中的`createApp`而不是`vue`包中的。
 
 ## 编写组件
 
@@ -49,7 +49,7 @@ Vue Lynx组件就是普通的Vue组件，你可以使用所有熟悉的Vue语法
 ```vue
 <script setup lang="ts">
 import { ref } from 'vue'
-import { View, Text } from 'vue-lynx'
+import { View, Text } from '@pgg/vue-lynx'
 
 const count = ref(0)
 </script>
@@ -79,7 +79,7 @@ Vue Lynx提供了丰富的内置组件，包括：
 导入组件的方式与标准Vue组件相同：
 
 ```typescript
-import { View, Text, Input, Image } from 'vue-lynx'
+import { View, Text, Input, Image } from '@pgg/vue-lynx'
 ```
 
 ## 事件处理

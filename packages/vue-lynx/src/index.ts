@@ -1,5 +1,5 @@
-export * from '@lynx-vue/runtime'
+export * from '@pgg/runtime'
 
-export * from '@lynx-vue/components'
+export * from '@pgg/components'
 
 export { createApp } from './app'

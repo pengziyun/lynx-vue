@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { ref } from 'vue'
-import { View, Text } from 'vue-lynx'
-import { runOnBackground, runOnMainThread } from 'vue-lynx'
+import { View, Text } from '@pgg/vue-lynx'
+import { runOnBackground, runOnMainThread } from '@pgg/vue-lynx'
 
 // 任务结果
 const result = ref('')
