@@ -1,37 +1,59 @@
 {
   "name": "@pgg/vue-lynx",
   "version": "0.1.0",
+  "description": "Vue-first Lynx runtime for native, web preview, and SSR workflows",
   "type": "module",
-  "main": "./dist/index.cjs",
+  "main": "./dist/index.js",
   "module": "./dist/index.js",
   "types": "./dist/index.d.ts",
   "exports": {
     ".": {
       "types": "./dist/index.d.ts",
       "import": "./dist/index.js",
-      "require": "./dist/index.cjs"
+      "require": "./dist/index.js"
+    },
+    "./native-vue": {
+      "types": "./dist/native-vue.d.ts",
+      "import": "./dist/native-vue.js",
+      "require": "./dist/native-vue.js"
+    },
+    "./web": {
+      "types": "./dist/web.d.ts",
+      "import": "./dist/web.js",
+      "require": "./dist/web.js"
+    },
+    "./ssr": {
+      "types": "./dist/ssr.d.ts",
+      "import": "./dist/ssr.js",
+      "require": "./dist/ssr.js"
     }
   },
+  "files": ["dist"],
   "scripts": {
-    "dev": "vite build --watch",
-    "build": "vite build && tsc --emitDeclarationOnly",
-    "test": "vitest"
+    "build": "tsup src/index.ts src/native-vue.ts src/web.ts src/ssr.ts --format cjs,esm --dts --clean",
+    "dev": "tsup src/index.ts src/native-vue.ts src/web.ts src/ssr.ts --format cjs,esm --dts --watch",
+    "typecheck": "tsc --noEmit",
+    "test": "pnpm -C ../.. exec vitest run --config vitest.config.ts"
   },
   "dependencies": {
-    "@pgg/runtime": "workspace:*",
-    "@pgg/components": "workspace:*"
-  },
-  "peerDependencies": {
-    "vue": "^3.4.0"
+    "@vue/reactivity": "^3.5.13",
+    "@vue/runtime-core": "^3.5.13",
+    "@vue/server-renderer": "^3.5.13",
+    "@vue/shared": "^3.5.13",
+    "vue": "^3.5.13"
   },
   "devDependencies": {
-    "@types/node": "^20.11.0",
-    "typescript": "^5.3.0",
-    "vite": "^5.0.0",
-    "vitest": "^1.2.0",
-    "vue": "^3.4.0"
+    "tsup": "^8.5.0",
+    "typescript": "^5.8.3"
   },
+  "keywords": ["vue", "lynx", "renderer", "native", "ssr", "preview"],
+  "license": "MIT",
   "publishConfig": {
     "access": "public"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/pgg/new-vue-lynx",
+    "directory": "packages/vue-lynx"
   }
 }

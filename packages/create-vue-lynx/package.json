@@ -1,0 +1,24 @@
+{
+  "name": "@pgg/create-vue-lynx",
+  "version": "0.1.0",
+  "description": "Starter scaffolding for VueLynx applications",
+  "type": "module",
+  "bin": {
+    "create-vue-lynx": "./dist/index.js"
+  },
+  "files": ["dist", "templates"],
+  "scripts": {
+    "build": "tsup src/index.ts --format esm --clean",
+    "dev": "tsup src/index.ts --format esm --watch",
+    "typecheck": "tsc --noEmit",
+    "test": "pnpm -C ../.. exec vitest run --config vitest.config.ts --passWithNoTests"
+  },
+  "devDependencies": {
+    "tsup": "^8.5.0",
+    "typescript": "^5.8.3"
+  },
+  "license": "MIT",
+  "publishConfig": {
+    "access": "public"
+  }
+}

@@ -1,0 +1,33 @@
+{
+  "name": "@pgg/vue-lynx-testing",
+  "version": "0.1.0",
+  "description": "Testing helpers for VueLynx packages and demo apps",
+  "type": "module",
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "require": "./dist/index.cjs"
+    }
+  },
+  "files": ["dist"],
+  "scripts": {
+    "build": "tsup src/index.ts --format cjs,esm --dts --clean",
+    "dev": "tsup src/index.ts --format cjs,esm --dts --watch",
+    "typecheck": "tsc --noEmit",
+    "test": "pnpm -C ../.. exec vitest run --config vitest.config.ts --passWithNoTests"
+  },
+  "dependencies": {
+    "@pgg/vue-lynx": "workspace:*"
+  },
+  "devDependencies": {
+    "tsup": "^8.5.0",
+    "typescript": "^5.8.3"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}

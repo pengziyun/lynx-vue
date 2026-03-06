@@ -1,76 +1,49 @@
-# Vue Lynx
+# `new-vue-lynx`
 
-Vue 3 integration for Lynx cross-platform framework.
+`new-vue-lynx` is a fresh workspace for building a Vue-first Lynx framework under the `@pgg/*` scope.
 
-[![CI](https://github.com/your-org/lynx-vue/actions/workflows/ci.yml/badge.svg)](https://github.com/your-org/lynx-vue/actions/workflows/ci.yml)
-[![npm version](https://badge.fury.io/js/%40pgg%2Fvue-lynx.svg)](https://www.npmjs.com/package/@pgg/vue-lynx)
+Chinese documentation is available at `README.zh-CN.md` and `docs/zh-CN/index.md`.
 
-## 特性
+Authoritative project references:
 
-- 🚀 完整的Vue 3 Composition API支持
-- ⚡️ 基于Lynx双线程架构的高性能渲染
-- 📦 10+个内置组件
-- 🔧 完整的TypeScript类型定义
-- 📖 详细的文档和示例
+- `docs/research/react-lynx-gap-analysis.md`
+- `docs/architecture/vue-lynx-technical-plan.md`
+- `docs/architecture/implementation-governance.md`
 
-## 安装
+Core workspaces:
 
-```bash
-pnpm add @pgg/vue-lynx vue
-```
+- `packages/vue-lynx`: native runtime and public API
+- `packages/vue-lynx-compiler`: compiler-side transforms
+- `packages/vue-lynx-rsbuild-plugin`: Lynx native build integration
+- `packages/vue-lynx-vite-plugin`: web preview and SSR integration
+- `packages/vue-lynx-testing`: test helpers
+- `packages/create-vue-lynx`: starter project scaffold
+- `apps/demo-showcase`: integration demo covering template, Options API, JSX, Suspense, Teleport, custom directives
 
-## 快速开始
-
-```typescript
-import { createApp } from '@pgg/vue-lynx'
-import { View, Text } from '@pgg/vue-lynx'
-import { ref } from 'vue'
-
-const App = {
-  setup() {
-    const count = ref(0)
-    return { count }
-  },
-  template: `
-    <View>
-      <Text>Count: {{ count }}</Text>
-      <View @click="count++">
-        <Text>Increment</Text>
-      </View>
-    </View>
-  `
-}
-
-createApp(App).mount('#app')
-```
-
-## 文档
-
-访问[完整文档](https://your-org.github.io/lynx-vue)了解更多。
-
-## 开发
+Quick start:
 
 ```bash
-# 安装依赖
 pnpm install
-
-# 开发模式
-pnpm dev
-
-# 构建
-pnpm build
-
-# 测试
-pnpm test
-
-# 类型检查
+pnpm --filter @pgg/demo-showcase dev
+pnpm --filter @pgg/demo-showcase dev:web
+pnpm --filter @pgg/demo-showcase build:ssr
 pnpm typecheck
+pnpm test
 ```
 
-## 贡献
+Guide index:
 
-欢迎贡献!请查看[贡献指南](CONTRIBUTING.md)。
+- `docs/guide/quick-start.md`
+- `docs/guide/local-development.md`
+- `docs/guide/native-debugging.md`
+- `docs/guide/web-preview.md`
+- `docs/guide/build-and-deploy.md`
+- `docs/guide/ios-host.md`
+- `docs/guide/android-host.md`
+- `docs/guide/testing-and-ci.md`
+- `docs/guide/syntax-support-matrix.md`
 
-## 许可证
+Chinese guide index:
 
-[MIT](LICENSE)
+- `README.zh-CN.md`
+- `docs/zh-CN/index.md`

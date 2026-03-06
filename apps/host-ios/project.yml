@@ -1,0 +1,19 @@
+name: VueLynxHost
+options:
+  bundleIdPrefix: com.pgg
+targets:
+  VueLynxHost:
+    type: application
+    platform: iOS
+    deploymentTarget: "15.0"
+    sources:
+      - path: VueLynxHost
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.pgg.vuelynxhost
+        INFOPLIST_FILE: VueLynxHost/Info.plist
+        SWIFT_VERSION: 5.0
+    info:
+      path: VueLynxHost/Info.plist
+      properties:
+        UILaunchScreen: {}

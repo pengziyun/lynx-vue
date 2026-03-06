@@ -1,0 +1,30 @@
+{
+  "name": "starter-vue-lynx-app",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "rspeedy dev",
+    "build": "rspeedy build",
+    "preview": "rspeedy preview",
+    "dev:web": "vite",
+    "build:web": "vite build",
+    "build:ssr": "vite build --ssr src/entry-server.ts --outDir dist/ssr && vite build --outDir dist/web",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@pgg/vue-lynx": "^0.1.0",
+    "vue": "^3.5.13"
+  },
+  "devDependencies": {
+    "@pgg/vue-lynx-rsbuild-plugin": "^0.1.0",
+    "@pgg/vue-lynx-vite-plugin": "^0.1.0",
+    "@lynx-js/qrcode-rsbuild-plugin": "^0.4.1",
+    "@lynx-js/rspeedy": "^0.11.1",
+    "@rsbuild/plugin-vue": "^1.2.6",
+    "@vitejs/plugin-vue": "^5.2.4",
+    "@vitejs/plugin-vue-jsx": "^4.2.0",
+    "@vue/server-renderer": "^3.5.13",
+    "typescript": "^5.8.3",
+    "vite": "^5.4.19"
+  }
+}

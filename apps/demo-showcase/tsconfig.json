@@ -1,0 +1,18 @@
+{
+  "extends": "../../tsconfig.base.json",
+  "compilerOptions": {
+    "allowJs": true,
+    "jsx": "preserve",
+    "jsxImportSource": "vue",
+    "types": ["node", "vite/client", "vue/jsx"]
+  },
+  "include": [
+    "src/**/*.ts",
+    "src/**/*.tsx",
+    "src/**/*.vue",
+    "vite.config.ts",
+    "lynx.config.ts",
+    "../shared/**/*.mjs",
+    "../shared/**/*.d.ts"
+  ]
+}

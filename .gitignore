@@ -1,6 +1,7 @@
 node_modules
 dist
-*.log
+.rspeedy
+coverage
+.turbo
 .DS_Store
-.vscode
-.idea
+*.tsbuildinfo
