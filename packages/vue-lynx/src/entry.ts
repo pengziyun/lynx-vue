@@ -1,6 +1,13 @@
 import type { Component, InjectionKey, ShallowRef } from '@vue/runtime-core';
 import { defineComponent, h, inject, nextTick, shallowReadonly, shallowRef } from '@vue/runtime-core';
 import { createLynxApp, createRootContainer, type LynxApp } from './app';
+import { getLynxThreadMode, type LynxThreadMode } from './internal/thread-mode';
+import {
+  installBackgroundBootstrap,
+  installMainThreadBootstrap,
+  registerMainThreadDataProcessors,
+  setMainThreadDelegates,
+} from './internal/lynx-bootstrap';
 import { hasNativeElementPAPI, installNativeLynxAPI } from './lynxAPI';
 import type { LynxElement, LynxNativeElement } from './types';
 
@@ -11,6 +18,12 @@ export interface LynxEntryOptions<TData extends LynxPageData = LynxPageData> {
   defaultDataProcessor?: (data: unknown) => TData;
   dataProcessors?: Record<string, (data: unknown) => unknown>;
   initialData?: TData;
+}
+
+interface LynxEntryRegistration {
+  component: Component;
+  options: LynxEntryOptions;
+  threadMode: LynxThreadMode;
 }
 
 const EMPTY_PAGE_DATA: LynxPageData = {};
@@ -29,6 +42,7 @@ export function defineLynxEntry<TData extends LynxPageData = LynxPageData>(
   rootComponent: Component,
   options: LynxEntryOptions<TData> = {},
 ) {
+  const threadMode = getLynxThreadMode();
   const dataRef = shallowRef<LynxPageData>(normalizePageData(options.initialData));
   const providedDataRef = shallowReadonly(dataRef) as Readonly<ShallowRef<LynxPageData>>;
 
@@ -100,6 +114,7 @@ export function defineLynxEntry<TData extends LynxPageData = LynxPageData>(
   }
 
   const globalTarget = globalThis as {
+    __VUE_LYNX_ENTRY__?: LynxEntryRegistration;
     processData?: (data: unknown, processorName?: string) => LynxPageData;
     renderPage?: (data?: unknown) => void;
     updatePage?: (data?: unknown, options?: Record<string, unknown>) => void;
@@ -107,11 +122,34 @@ export function defineLynxEntry<TData extends LynxPageData = LynxPageData>(
     removeComponents?: () => void;
   };
 
-  globalTarget.processData = (data, processorName) => runDataProcessor(data, processorName);
-  globalTarget.renderPage = renderPage;
-  globalTarget.updatePage = updatePage;
-  globalTarget.getPageData = () => dataRef.value;
-  globalTarget.removeComponents = () => {};
+  globalTarget.__VUE_LYNX_ENTRY__ = {
+    component: rootComponent,
+    options,
+    threadMode,
+  };
+
+  if (threadMode === 'background') {
+    installBackgroundBootstrap();
+
+    return {
+      data: providedDataRef,
+      renderPage: () => {},
+      updatePage: () => {},
+      threadMode,
+    };
+  }
+
+  installMainThreadBootstrap();
+  setMainThreadDelegates({
+    getPageData: () => dataRef.value,
+    removeComponents: () => {},
+    renderPage,
+    updatePage,
+  });
+  registerMainThreadDataProcessors({
+    defaultDataProcessor: (data) => runDataProcessor(data),
+    dataProcessors: options.dataProcessors,
+  });
 
   if (!hasNativeElementPAPI() && options.autoMount !== false) {
     ensureMounted();
@@ -121,6 +159,7 @@ export function defineLynxEntry<TData extends LynxPageData = LynxPageData>(
     data: providedDataRef,
     renderPage,
     updatePage,
+    threadMode,
   };
 }
 

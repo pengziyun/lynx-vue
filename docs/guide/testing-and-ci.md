@@ -15,4 +15,15 @@ pnpm build
 - demo composable logic and SSR rendering in `apps/demo-showcase`
 - workspace build and typecheck through Turborepo
 
-Native iOS and Android host compilation is staged in source form, but was not compiled in this environment because Xcode and Android SDK toolchains were not executed here.
+## Confirmed manual validation
+
+- 2026-03-07: `pnpm --filter @pgg/demo-showcase dev` was verified on a real iOS device through Lynx Explorer for local development and debugging.
+
+## Items still not fully validated in this environment
+
+- Android host compilation
+- full iOS / Android host compilation acceptance
+- full Lynx DevTool validation on real devices
+- Android real-device Lynx Explorer development flow
+
+These areas already have source scaffolds, build paths, and documentation, but they are not all part of the stable acceptance baseline yet.

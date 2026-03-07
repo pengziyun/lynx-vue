@@ -12,6 +12,16 @@
       "import": "./dist/index.js",
       "require": "./dist/index.js"
     },
+    "./internal/thread-background": {
+      "types": "./dist/internal/thread-background.d.ts",
+      "import": "./dist/internal/thread-background.js",
+      "require": "./dist/internal/thread-background.js"
+    },
+    "./internal/thread-main": {
+      "types": "./dist/internal/thread-main.d.ts",
+      "import": "./dist/internal/thread-main.js",
+      "require": "./dist/internal/thread-main.js"
+    },
     "./native-vue": {
       "types": "./dist/native-vue.d.ts",
       "import": "./dist/native-vue.js",
@@ -30,8 +40,8 @@
   },
   "files": ["dist"],
   "scripts": {
-    "build": "tsup src/index.ts src/native-vue.ts src/web.ts src/ssr.ts --format cjs,esm --dts --clean",
-    "dev": "tsup src/index.ts src/native-vue.ts src/web.ts src/ssr.ts --format cjs,esm --dts --watch",
+    "build": "tsup src/index.ts src/native-vue.ts src/web.ts src/ssr.ts src/internal/thread-background.ts src/internal/thread-main.ts --format cjs,esm --dts --clean",
+    "dev": "tsup src/index.ts src/native-vue.ts src/web.ts src/ssr.ts src/internal/thread-background.ts src/internal/thread-main.ts --format cjs,esm --dts --watch",
     "typecheck": "tsc --noEmit",
     "test": "pnpm -C ../.. exec vitest run --config vitest.config.ts"
   },

@@ -148,6 +148,9 @@ importers:
       '@lynx-js/template-webpack-plugin':
         specifier: 0.10.4
         version: 0.10.4
+      '@pgg/vue-lynx-compiler':
+        specifier: workspace:*
+        version: link:../vue-lynx-compiler
     devDependencies:
       tsup:
         specifier: ^8.5.0

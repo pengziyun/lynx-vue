@@ -15,7 +15,7 @@ const {
 <template>
   <page class="native-page">
     <view class="hero">
-      <text class="eyebrow">VueLynx Native Demo</text>
+      <text class="eyebrow">VueLynx Native Demo11</text>
       <text class="headline">SFC template + Options API on the Lynx runtime</text>
     </view>
 

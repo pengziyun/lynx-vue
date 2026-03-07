@@ -12,6 +12,7 @@ import type { LynxNode } from './types';
 export type { LynxApp } from './app';
 export { LYNX_ELEMENTS, createRootContainer, isLynxElement } from './app';
 export { defineLynxEntry, lynxPageDataKey, useLynxData, type LynxEntryOptions } from './entry';
+export { getLynxThreadMode, type LynxThreadMode } from './internal/thread-mode';
 
 export const createApp = createLynxApp;
 

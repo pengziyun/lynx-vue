@@ -3,7 +3,7 @@
 ## 权威依据
 
 - `docs/zh-CN/research/react-lynx-gap-analysis.md`
-- `docs/zh-CN/architecture/vue-lynx-technical-plan.md`
+- `docs/zh-CN/architecture/vue-lynx-official-dual-thread-plan.md`
 - `docs/zh-CN/architecture/implementation-governance.md`
 
 ## 历史基线与计划追踪

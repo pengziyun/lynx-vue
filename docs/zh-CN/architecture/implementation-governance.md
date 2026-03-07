@@ -5,13 +5,13 @@
 以下文件是项目实现的正式依据：
 
 - `docs/research/react-lynx-gap-analysis.md`
-- `docs/architecture/vue-lynx-technical-plan.md`
+- `docs/architecture/vue-lynx-official-dual-thread-plan.md`
 - `docs/architecture/implementation-governance.md`
 
 中文对应参考版本：
 
 - `docs/zh-CN/research/react-lynx-gap-analysis.md`
-- `docs/zh-CN/architecture/vue-lynx-technical-plan.md`
+- `docs/zh-CN/architecture/vue-lynx-official-dual-thread-plan.md`
 - `docs/zh-CN/architecture/implementation-governance.md`
 
 ## 规则
@@ -20,6 +20,7 @@
 2. 如果实现过程中发现当前方案有误，必须先更新调研和方案文档，再修改代码。
 3. 没有自动化测试和明确使用路径的包，不视为可发布。
 4. 原生与 Web 行为允许差异，但差异必须是有意设计并写进文档。
+5. 原生实现必须保持官方双线程模型，不允许再回退到单原生入口运行时。
 
 ## 验收标准
 

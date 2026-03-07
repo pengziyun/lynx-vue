@@ -1,5 +1,11 @@
 # Build And Deploy
 
+Native Lynx build now follows an explicit dual-thread entry model:
+
+- background entry: `entry`
+- main-thread entry: `entry__main-thread`
+- final bundle: `entry.lynx.bundle`
+
 ## Native bundle
 
 ```bash

@@ -12,13 +12,13 @@
 以下文档是后续实现和演进的正式依据：
 
 - `docs/research/react-lynx-gap-analysis.md`
-- `docs/architecture/vue-lynx-technical-plan.md`
+- `docs/architecture/vue-lynx-official-dual-thread-plan.md`
 - `docs/architecture/implementation-governance.md`
 
 对应的中文参考版本位于：
 
 - `docs/zh-CN/research/react-lynx-gap-analysis.md`
-- `docs/zh-CN/architecture/vue-lynx-technical-plan.md`
+- `docs/zh-CN/architecture/vue-lynx-official-dual-thread-plan.md`
 - `docs/zh-CN/architecture/implementation-governance.md`
 
 原始总计划存档与偏差审查位于：

@@ -7,7 +7,7 @@ Chinese documentation is available at `README.zh-CN.md` and `docs/zh-CN/index.md
 Authoritative project references:
 
 - `docs/research/react-lynx-gap-analysis.md`
-- `docs/architecture/vue-lynx-technical-plan.md`
+- `docs/architecture/vue-lynx-official-dual-thread-plan.md`
 - `docs/architecture/implementation-governance.md`
 
 Core workspaces:

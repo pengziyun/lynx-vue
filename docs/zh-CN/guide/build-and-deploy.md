@@ -1,5 +1,11 @@
 # 构建与部署
 
+当前原生 Lynx 构建已经切到显式双线程 entry 模型：
+
+- background entry：`entry`
+- main-thread entry：`entry__main-thread`
+- 最终 bundle：`entry.lynx.bundle`
+
 ## 原生 bundle
 
 ```bash

@@ -46,6 +46,8 @@ export function createLynxAppOptions(configUrl) {
       aliasStrategy: 'prefer-alias',
       alias: {
         '@pgg/vue-lynx': path.resolve(appDir, '../../packages/vue-lynx/src/index.ts'),
+        '@pgg/vue-lynx/internal/thread-background': path.resolve(appDir, '../../packages/vue-lynx/src/internal/thread-background.ts'),
+        '@pgg/vue-lynx/internal/thread-main': path.resolve(appDir, '../../packages/vue-lynx/src/internal/thread-main.ts'),
         '@pgg/vue-lynx/native-vue': path.resolve(appDir, '../../packages/vue-lynx/src/native-vue.ts'),
       },
     },

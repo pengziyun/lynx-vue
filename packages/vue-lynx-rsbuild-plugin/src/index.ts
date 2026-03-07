@@ -1,4 +1,16 @@
+import { mkdirSync, writeFileSync } from 'node:fs';
+import path from 'node:path';
+
+import { RuntimeWrapperWebpackPlugin } from '@lynx-js/runtime-wrapper-webpack-plugin';
 import { LynxEncodePlugin, LynxTemplatePlugin } from '@lynx-js/template-webpack-plugin';
+import {
+  MAIN_THREAD_ENTRY_SUFFIX,
+  getThreadEntryPairs,
+  isMainThreadEntryName,
+  normalizeSourceEntries,
+  type SourceEntryDescriptor,
+  type SourceEntryItem,
+} from '@pgg/vue-lynx-compiler';
 
 export interface VueLynxRsbuildPluginOptions {
   targetSdkVersion?: string;
@@ -17,7 +29,11 @@ export interface VueLynxRsbuildPluginOptions {
 const DEFAULT_TEMPLATE_FILENAME = '[name].lynx.bundle';
 const NON_HMR_JS_ASSET = /\.js(?:\?.*)?$/;
 const HOT_UPDATE_ASSET = /\.hot-update\./;
+const BACKGROUND_JS_ASSET = /^(?!.*main-thread(?:\.[A-Fa-f0-9]+)?\.js$).*\.js$/;
 const NATIVE_VUE_RUNTIME = '@pgg/vue-lynx/native-vue';
+const BACKGROUND_PRELUDE_MODULE = '@pgg/vue-lynx/internal/thread-background';
+const MAIN_THREAD_PRELUDE_MODULE = '@pgg/vue-lynx/internal/thread-main';
+const GENERATED_ENTRY_ROOT = '.rspeedy/vue-lynx-entries';
 
 export function pluginVueLynx(userOptions: VueLynxRsbuildPluginOptions = {}) {
   const resolvedOptions = {
@@ -39,6 +55,12 @@ export function pluginVueLynx(userOptions: VueLynxRsbuildPluginOptions = {}) {
     name: 'vue-lynx:rsbuild',
     pre: ['lynx:rsbuild:plugin-api'],
     setup(api: any) {
+      api.modifyRsbuildConfig((config: any, { mergeRsbuildConfig }: any) => mergeRsbuildConfig(config, {
+        source: {
+          entry: createGeneratedThreadEntries(api.context.rootPath, config.source?.entry),
+        },
+      }));
+
       api.modifyRsbuildConfig((config: any, { mergeRsbuildConfig }: any) => mergeRsbuildConfig(config, {
         dev: {
           hmr: false,
@@ -81,6 +103,13 @@ export function pluginVueLynx(userOptions: VueLynxRsbuildPluginOptions = {}) {
           });
         }
 
+        chain.plugin('vue-lynx:runtime-wrapper').use(RuntimeWrapperWebpackPlugin, [
+          {
+            targetSdkVersion: resolvedOptions.targetSdkVersion,
+            test: BACKGROUND_JS_ASSET,
+          },
+        ]);
+
         const rspeedyApi = api.useExposed(Symbol.for('rspeedy.api'));
         const rspeedyConfig = rspeedyApi?.config;
         const entryPoints = chain.entryPoints.entries?.() ?? {};
@@ -96,17 +125,17 @@ export function pluginVueLynx(userOptions: VueLynxRsbuildPluginOptions = {}) {
 
         chain.plugin('vue-lynx:mark-main-thread').use(MarkMainThreadRspackPlugin, [
           {
-            entries: Object.keys(entryPoints),
+            entries: Object.keys(entryPoints).filter((entryName) => isMainThreadEntryName(entryName)),
           },
         ]);
 
-        Object.keys(entryPoints).forEach((entryName) => {
-          chain.plugin(`vue-lynx:template:${entryName}`).use(LynxTemplatePlugin, [
+        getThreadEntryPairs(Object.keys(entryPoints)).forEach(({ backgroundName, mainThreadName }) => {
+          chain.plugin(`vue-lynx:template:${backgroundName}`).use(LynxTemplatePlugin, [
             {
               dsl: resolvedOptions.dsl,
-              chunks: [entryName],
-              filename: replaceToken(replaceToken(templateFilename, '[name]', entryName), '[platform]', environmentName),
-              intermediate: `.rspeedy/${entryName}`,
+              chunks: [backgroundName, mainThreadName].filter((entryName) => entryName in entryPoints),
+              filename: replaceToken(replaceToken(templateFilename, '[name]', backgroundName), '[platform]', environmentName),
+              intermediate: `.rspeedy/${backgroundName}`,
               customCSSInheritanceList: undefined,
               debugInfoOutside: resolvedOptions.debugInfoOutside,
               defaultDisplayLinear: resolvedOptions.defaultDisplayLinear,
@@ -126,6 +155,107 @@ export function pluginVueLynx(userOptions: VueLynxRsbuildPluginOptions = {}) {
       });
     },
   };
+}
+
+function createGeneratedThreadEntries(rootPath: string, sourceEntry: unknown) {
+  const normalizedEntries = normalizeSourceEntries(sourceEntry);
+  const dualEntries: Record<string, SourceEntryItem> = {};
+
+  Object.entries(normalizedEntries)
+    .filter(([entryName]) => !isMainThreadEntryName(entryName))
+    .forEach(([entryName, entryValue]) => {
+      dualEntries[entryName] = createThreadEntryDescriptor(
+        rootPath,
+        entryName,
+        entryValue,
+        'background',
+      );
+      dualEntries[`${entryName}${MAIN_THREAD_ENTRY_SUFFIX}`] = createThreadEntryDescriptor(
+        rootPath,
+        entryName,
+        entryValue,
+        'main-thread',
+      );
+    });
+
+  return dualEntries;
+}
+
+function createThreadEntryDescriptor(
+  rootPath: string,
+  entryName: string,
+  entryValue: SourceEntryItem,
+  threadMode: 'background' | 'main-thread',
+): SourceEntryDescriptor {
+  const imports = getEntryImports(entryValue);
+  const wrapperFile = createThreadWrapperFile(rootPath, entryName, imports, threadMode);
+  const entryDescriptor = typeof entryValue === 'object' && !Array.isArray(entryValue)
+    ? entryValue
+    : {};
+
+  return {
+    ...entryDescriptor,
+    import: wrapperFile,
+    filename: threadMode === 'background'
+      ? `.rspeedy/${entryName}/background.js`
+      : `.rspeedy/${entryName}/main-thread.js`,
+  };
+}
+
+function getEntryImports(entryValue: SourceEntryItem) {
+  if (typeof entryValue === 'string') {
+    return [entryValue];
+  }
+
+  if (Array.isArray(entryValue)) {
+    return entryValue;
+  }
+
+  if (entryValue.import == null) {
+    return [];
+  }
+
+  return Array.isArray(entryValue.import) ? entryValue.import : [entryValue.import];
+}
+
+function createThreadWrapperFile(
+  rootPath: string,
+  entryName: string,
+  imports: string[],
+  threadMode: 'background' | 'main-thread',
+) {
+  const wrapperDir = path.join(rootPath, GENERATED_ENTRY_ROOT, entryName);
+  const wrapperFile = path.join(wrapperDir, `${threadMode}-entry.mjs`);
+  const preludeImport = threadMode === 'background'
+    ? BACKGROUND_PRELUDE_MODULE
+    : MAIN_THREAD_PRELUDE_MODULE;
+  const content = [
+    `import ${JSON.stringify(preludeImport)};`,
+    ...imports.map((request) => `import ${JSON.stringify(toWrapperImport(rootPath, wrapperDir, request))};`),
+    '',
+  ].join('\n');
+
+  mkdirSync(wrapperDir, { recursive: true });
+  writeFileSync(wrapperFile, content, 'utf8');
+
+  return wrapperFile;
+}
+
+function toWrapperImport(rootPath: string, wrapperDir: string, request: string) {
+  if (!request.startsWith('.') && !path.isAbsolute(request)) {
+    return request;
+  }
+
+  const absoluteRequest = path.isAbsolute(request)
+    ? request
+    : path.resolve(rootPath, request);
+  let relativeRequest = path.relative(wrapperDir, absoluteRequest);
+
+  if (!relativeRequest.startsWith('.')) {
+    relativeRequest = `./${relativeRequest}`;
+  }
+
+  return relativeRequest.split(path.sep).join('/');
 }
 
 function getTemplateFilename(filename: unknown) {
